@@ -1,7 +1,7 @@
 import './MainPage.css'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -10,6 +10,25 @@ function MainPage() {
   const navigationPrevRef = useRef(null)
   const navigationNextRef = useRef(null)
   const paginationRef = useRef(null)
+  const [swiper, setSwiper] = useState(null)
+
+  useEffect(() => {
+    if (swiper) {
+      if (navigationPrevRef.current && navigationNextRef.current) {
+        swiper.params.navigation.prevEl = navigationPrevRef.current
+        swiper.params.navigation.nextEl = navigationNextRef.current
+        swiper.navigation.init()
+        swiper.navigation.update()
+      }
+      if (paginationRef.current) {
+        swiper.params.pagination.el = paginationRef.current
+        swiper.pagination.init()
+        swiper.pagination.render()
+        swiper.pagination.update()
+      }
+      swiper.update()
+    }
+  }, [swiper])
 
   const storyFeatures = [
     {
@@ -115,38 +134,12 @@ function MainPage() {
       price: "299.000",
       image: "/assets/tel.png"
 
-    },
-    {
-      id: 4,
-      title: "ROMANTIK OQSHOM",
-      description: ["Oltin ramka va nafis yozuvlar", "bilan bezatilgan"],
-      sales: "120+ marta sotilgan",
-      price: "149.000",
-      image: "/assets/tel.png"
-
-    },
-    {
-      id: 5,
-      title: "ELEGANT STIL",
-      description: ["Oltin ramka va nafis yozuvlar", "bilan bezatilgan"],
-      sales: "120+ marta sotilgan",
-      price: "249.000",
-      image: "/assets/tel.png"
-
-    },
-    {
-      id: 6,
-      title: "KLASSIK GO'ZALLIK",
-      description: ["Oltin ramka va nafis yozuvlar", "bilan bezatilgan"],
-      sales: "120+ marta sotilgan",
-      price: "179.000",
-      image: "/assets/tel.png"
-
     }
   ]
 
   return (
     <div className="main-page">
+      <div className="page-container">
 
 
 
@@ -154,7 +147,10 @@ function MainPage() {
       <main id="home" className="main-content">
 
         <div className="header-container">
-          <div className="brand-name">TAKLIFNOMAVIP</div>
+          <div className="brand-name">
+            <img src="/assets/taklifnomaVip.svg" alt="logo" />
+          </div>
+   
           <input type="checkbox" id="menu-toggle" className="menu-toggle" />
           <label htmlFor="menu-toggle" className="menu-toggle-label">
             <span></span>
@@ -179,7 +175,11 @@ function MainPage() {
               <p className="body-text">
                 Har bir bayram, unutilmas his-tuyg'ular bilan. Bizning platformamiz orqali yaratilgan har bir taklifnoma, sizning maxsus kuningizning samimiy hissiyotlarini aks ettirib, mehmonlaringizni unutilmas daqiqalarga chorlaydi.
               </p>
-              <button className="cta-button">BUYURTMA BERISH</button>
+              <div className="cta-button-wrapper">
+                <div className="cta-line"></div>
+                <button className="cta-button">BUYURTMA BERISH</button>
+                <div className="cta-line"></div>
+              </div>
             </div>
           </div>
 
@@ -197,46 +197,60 @@ function MainPage() {
       <section className="features-section">
         <div className="features-container">
           <div className="feature-block">
-            <div className="feature-number">01.</div>
-            <div className="feature-divider">
-              <h3 className="feature-title">Individual</h3>
-              <p className="feature-description">
-                Har bir taklifnoma sizga moslab yaratiladi
-              </p>
+            <div className="feature-number-wrapper">
+              <div className="feature-number-shadow">01.</div>
+              <div className="feature-number">01.</div>
             </div>
-            <div className="feature-line"></div>
+            <div className="feature-title-wrapper">
+            <h3 className="feature-title">Individual</h3>
+            <p className="feature-description">
+              Har bir taklifnoma sizga moslab yaratiladi
+            </p>
+            <div className="feature-underline"></div>
+            </div>
           </div>
 
           <div className="feature-block">
-            <div className="feature-number">02.</div>
-            <div className="feature-divider">
-              <h3 className="feature-title">Tez tayyorlash</h3>
+            <div className="feature-number-wrapper">
+              <div className="feature-number-shadow">02.</div>
+              <div className="feature-number">02.</div>
+            </div>
+            <div className="feature-title-wrapper">
+            <h3 className="feature-title">Tayyorlash</h3>
               <p className="feature-description">
                 10 daqiqada tayyor, 24 soat ichida tayyorlanadi
               </p>
+              <div className="feature-underline"></div>
             </div>
-            <div className="feature-line"></div>
           </div>
 
           <div className="feature-block">
-            <div className="feature-number">03.</div>
-            <div className="feature-divider">     <h3 className="feature-title">Premium class</h3>
-              <p className="feature-description">
-                Professional dizaynerlar tomonidan tayyorlangan shablonlar
-              </p></div>
-            <div className="feature-line"></div>
+            <div className="feature-number-wrapper">
+              <div className="feature-number-shadow">03.</div>
+              <div className="feature-number">03.</div>
+            </div>
+            <div className="feature-title-wrapper">
+            <h3 className="feature-title">Premium class</h3>
+            <p className="feature-description">
+              Professional dizaynerlar tomonidan tayyorlangan shablonlar
+            </p>
+            <div className="feature-underline"></div>
+            </div>
           </div>
 
           <div className="feature-block">
-            <div className="feature-number">04.</div>
-            <div className="feature-divider">
-              <h3 className="feature-title">Qulay xizmat</h3>
-              <p className="feature-description">
-                Onlayn toʻlov, avtomatik saqlash va ulashish imkoniyati
-              </p>
+            <div className="feature-number-wrapper">
+              <div className="feature-number-shadow">04.</div>
+              <div className="feature-number">04.</div>
             </div>
-            <div className="feature-line"></div>
-          </div>
+            <div className="feature-title-wrapper">
+            <h3 className="feature-title">Qulay xizmat</h3>
+            <p className="feature-description">
+              Onlayn toʻlov, avtomatik saqlash va ulashish imkoniyati
+            </p>
+            <div className="feature-underline"></div>
+            </div>
+                  </div>
         </div>
       </section>
       <section id="about" className="about-section">
@@ -251,7 +265,7 @@ function MainPage() {
           </div>
           <div className="about-right">
             <div className="about-image-wrapper">
-              <img src="/assets/img_3.png" alt="About us" className="about-main-image" />
+              <img src="/assets/imgss.svg" alt="About us" className="about-main-image" />
               <div className="about-year">2025</div>
             </div>
             <div className="about-decorative-elements">
@@ -348,31 +362,66 @@ function MainPage() {
             slidesPerView={3}
             slidesPerGroup={3}
             allowTouchMove={true}
+            touchEventsTarget="container"
+            grabCursor={true}
+            onSwiper={setSwiper}
+            onInit={(swiper) => {
+              setTimeout(() => {
+                if (navigationPrevRef.current && navigationNextRef.current) {
+                  swiper.params.navigation.prevEl = navigationPrevRef.current
+                  swiper.params.navigation.nextEl = navigationNextRef.current
+                }
+                if (paginationRef.current) {
+                  swiper.params.pagination.el = paginationRef.current
+                }
+                swiper.navigation.init()
+                swiper.navigation.update()
+                swiper.pagination.init()
+                swiper.pagination.render()
+                swiper.pagination.update()
+                swiper.update()
+              }, 100)
+            }}
+            onSlideChange={(swiper) => {
+              if (swiper.navigation) {
+                swiper.navigation.update()
+              }
+              if (swiper.pagination) {
+                swiper.pagination.update()
+              }
+            }}
             navigation={{
               prevEl: navigationPrevRef.current,
               nextEl: navigationNextRef.current,
+              disabledClass: 'swiper-button-disabled',
             }}
             pagination={{
               el: paginationRef.current,
               clickable: true,
               bulletClass: 'nav-dot',
               bulletActiveClass: 'nav-dot active',
-            }}
-            onBeforeInit={(swiper) => {
-              swiper.params.navigation.prevEl = navigationPrevRef.current
-              swiper.params.navigation.nextEl = navigationNextRef.current
-              swiper.params.pagination.el = paginationRef.current
+              type: 'bullets',
             }}
             breakpoints={{
               320: {
                 slidesPerView: 1,
                 slidesPerGroup: 1,
-                spaceBetween: 20,
+                spaceBetween: 0,
+              },
+              480: {
+                slidesPerView: 1,
+                slidesPerGroup: 1,
+                spaceBetween: 0,
               },
               768: {
+                slidesPerView: 1,
+                slidesPerGroup: 1,
+                spaceBetween: 0,
+              },
+              1024: {
                 slidesPerView: 2,
-                slidesPerGroup: 2,
-                spaceBetween: 25,
+                slidesPerGroup: 1,
+                spaceBetween: 30,
               },
               1200: {
                 slidesPerView: 3,
@@ -535,6 +584,7 @@ function MainPage() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   )
 }
